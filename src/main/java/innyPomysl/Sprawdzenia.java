@@ -60,4 +60,31 @@ public class Sprawdzenia {
         return cyfryZKwadracika;
     }
 
+    public int[][] sprawdzenieMozliwychCyfrZKwadracikow(int[][] sudoku) {
+        int[][] cyfryZKwadracikow = wypisanieCyfrZKwadracika(sudoku);
+        return sprawdzenieRzedow(cyfryZKwadracikow);
+    }
+
+    public int[][] sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow(int[][] mozliweWRzedach, int[][] mozliweWKolumnach) {
+        int[][] odpowiedz = new int[81][9];
+        int licznik = 0;
+
+        for (int k = 0; k < 9; k++) {
+            for (int i = 0; i < 9; i++) {
+                int[] pomocnicza = new int[9];
+
+                for (int j = 0; j < 9; j++) {
+                    if (mozliweWRzedach[k][j] == mozliweWKolumnach[i][j]) {
+                        pomocnicza[j] = mozliweWRzedach[k][j];
+                    }
+
+                }
+                odpowiedz[licznik] = pomocnicza;
+                licznik++;
+            }
+
+        }
+        return odpowiedz;
+    }
+
 }

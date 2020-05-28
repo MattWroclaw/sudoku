@@ -18,10 +18,24 @@ public class Test {
         int[][] sudoku = {rzad1, rzad2, rzad3, rzad4, rzad5, rzad6, rzad7, rzad8, rzad9};
         Sprawdzenia sprawdzenia = new Sprawdzenia();
 
-        int[][] ints = sprawdzenia.wypisanieCyfrZKwadracika(sudoku);
-
-        for (int[] rzad: ints) {
+        System.out.println("Mozliwe syfry - RZEDY");
+        int[][] rzedow = sprawdzenia.sprawdzenieRzedow(sudoku);
+        for (int [] rzad: rzedow) {
             System.out.println(Arrays.toString(rzad));
+        }
+
+        System.out.println("Mozliwe cyfry - KOLUMNY");
+        int[][] kolumn = sprawdzenia.sprawdzenieKolumn(sudoku);
+        for (int[] kolumna: kolumn) {
+            System.out.println(Arrays.toString(kolumna));
+        }
+
+        System.out.println("Wypisanie mozliwych cyfr: kolumna + rzad");
+        int[][] kolumnaIrzad = sprawdzenia.sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow(rzedow, kolumn);
+        int licznik =1;
+        for (int[] kwadracik: kolumnaIrzad) {
+            System.out.println("Numer komorki: "+licznik+Arrays.toString(kwadracik));
+            licznik++;
         }
 
     }
