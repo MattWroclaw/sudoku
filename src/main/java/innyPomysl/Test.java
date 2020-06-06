@@ -51,5 +51,7 @@ public class Test {
             System.out.println("Komorka "+(licznik-81) + Arrays.toString(pierwszyKwadrat));
             licznik++;
         }
+
+        sprawdzenia.drukowanieRozwiazan(pierwszyKwadrat_gotowe);
     }
 }

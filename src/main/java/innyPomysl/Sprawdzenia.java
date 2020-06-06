@@ -1,5 +1,7 @@
 package innyPomysl;
 
+import java.util.Arrays;
+
 public class Sprawdzenia {
 
     public int[] sprawdzenieMozliweCfyry(int[] rzad) { // pakuje to tablicy tylko te cyfry które nie występują w rzędzie
@@ -65,7 +67,7 @@ public class Sprawdzenia {
         return sprawdzenieRzedow(cyfryZKwadracikow);
     }
 
-    public int[][] sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow( int[][]sudoku , int[][] mozliweWRzedach, int[][] mozliweWKolumnach) {
+    public int[][] sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow(int[][] sudoku, int[][] mozliweWRzedach, int[][] mozliweWKolumnach) {
         int[][] odpowiedz = new int[81][9];
         int licznik = 0;
 
@@ -89,13 +91,13 @@ public class Sprawdzenia {
     public int[][] sprawdzenieWrazZKwadratami(int[][] sudoku, int[][] sprawdzoneRzedyIKolumny, int[][] mozliweWKwadracie) {
         int[][] odpowiedz = new int[81][9];
 
-        for (int wierszKwadratu=0; wierszKwadratu<3; wierszKwadratu++) {
+        for (int wierszKwadratu = 0; wierszKwadratu < 3; wierszKwadratu++) {
             for (int kwadrat = 0; kwadrat < 3; kwadrat++) {
                 for (int wiersz = 0; wiersz < 3; wiersz++) {
                     for (int pole = 0; pole < 3; pole++) {
                         for (int i = 0; i < 9; i++) {
-                            if (mozliweWKwadracie[kwadrat][i] == sprawdzoneRzedyIKolumny[pole + 9 * wiersz + 3 * kwadrat + wierszKwadratu*27][i]) {
-                                odpowiedz[pole + 9 * wiersz + 3 * kwadrat +wierszKwadratu*27][i] = mozliweWKwadracie[kwadrat][i];
+                            if (mozliweWKwadracie[kwadrat + 3*wierszKwadratu][i] == sprawdzoneRzedyIKolumny[pole + 9 * wiersz + 3 * kwadrat + wierszKwadratu * 27][i]) {
+                                odpowiedz[pole + 9 * wiersz + 3 * kwadrat + wierszKwadratu * 27][i] = mozliweWKwadracie[kwadrat + 3*wierszKwadratu][i];
                             }
                         }
                     }
@@ -106,13 +108,49 @@ public class Sprawdzenia {
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
                 if ((sudoku[i][j] != 0)) {
-                    int [] pom = new int[9];
-                    pom[j] = sudoku[i][j] *(-1);
-                    odpowiedz[j +9*i] = pom;
+                    int[] pom = new int[9];
+                    pom[j] = sudoku[i][j] * (-1);
+                    odpowiedz[j + 9 * i] = pom;
                 }
             }
         }
         return odpowiedz;
+    }
+
+    void drukowanieRozwiazan(int[][] suroweRozwiazania) {
+        for (int i = 0; i < suroweRozwiazania.length; i++) {
+
+            if ((zawieraMinusowe(suroweRozwiazania[i]) == false) &&
+                    (czyJestPojedynczeRozwiazanie(suroweRozwiazania[i]) == true)) {
+                System.out.println("Komorka nr " + (i+1) + Arrays.toString(suroweRozwiazania[i]));
+            }
+
+        }
+
+    }
+
+    private boolean zawieraMinusowe(int[] tab) {
+        boolean minusowe = false;
+        for (int liczba : tab) {
+            if (liczba < 0) {
+                minusowe = true;
+            }
+        }
+        return minusowe;
+    }
+
+    private boolean czyJestPojedynczeRozwiazanie(int[] tab) {
+        boolean pojedynczeRozwiazanie = false;
+        int licznikRozwiazan = 0;
+        for (int liczba : tab) {
+            if (liczba > 0) {
+                licznikRozwiazan++;
+            }
+        }
+        if (licznikRozwiazan == 1) {
+            pojedynczeRozwiazanie = true;
+        }
+        return pojedynczeRozwiazanie;
     }
 
 
