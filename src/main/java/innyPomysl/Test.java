@@ -20,23 +20,36 @@ public class Test {
 
         System.out.println("Mozliwe syfry - RZEDY");
         int[][] rzedow = sprawdzenia.sprawdzenieRzedow(sudoku);
-        for (int [] rzad: rzedow) {
-            System.out.println(Arrays.toString(rzad));
-        }
+//        for (int [] rzad: rzedow) {
+//            System.out.println(Arrays.toString(rzad));
+//        }
 
         System.out.println("Mozliwe cyfry - KOLUMNY");
         int[][] kolumn = sprawdzenia.sprawdzenieKolumn(sudoku);
-        for (int[] kolumna: kolumn) {
-            System.out.println(Arrays.toString(kolumna));
-        }
+//        for (int[] kolumna: kolumn) {
+//            System.out.println(Arrays.toString(kolumna));
+//        }
 
         System.out.println("Wypisanie mozliwych cyfr: kolumna + rzad");
-        int[][] kolumnaIrzad = sprawdzenia.sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow(rzedow, kolumn);
+        int[][] kolumnaIrzad = sprawdzenia.sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow(sudoku, rzedow, kolumn);
         int licznik =1;
         for (int[] kwadracik: kolumnaIrzad) {
             System.out.println("Numer komorki: "+licznik+Arrays.toString(kwadracik));
             licznik++;
         }
 
+        System.out.println("Wypisanie mozliwych z kwadratu");
+        int[][] sprawdzenieMozliwychCyfrZKwadracikow = sprawdzenia.sprawdzenieMozliwychCyfrZKwadracikow(sudoku);
+        for (int[] kwadrat : sprawdzenieMozliwychCyfrZKwadracikow){
+            System.out.println(Arrays.toString(kwadrat));
+        }
+
+
+        System.out.println("Wypisanie mozliwych cyfr: kol+rzad+ 1 kwadracik");
+        int[][] pierwszyKwadrat_gotowe = sprawdzenia.sprawdzenieWrazZKwadratami(sudoku ,kolumnaIrzad, sprawdzenieMozliwychCyfrZKwadracikow);
+        for (int [] pierwszyKwadrat : pierwszyKwadrat_gotowe){
+            System.out.println("Komorka "+(licznik-81) + Arrays.toString(pierwszyKwadrat));
+            licznik++;
+        }
     }
 }
