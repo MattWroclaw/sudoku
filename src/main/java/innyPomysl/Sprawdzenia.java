@@ -117,16 +117,20 @@ public class Sprawdzenia {
         return odpowiedz;
     }
 
-    void drukowanieRozwiazan(int[][] suroweRozwiazania) {
+    int[][] drukowanieRozwiazan(int[][] suroweRozwiazania) {
+
+        int [][] komorkiZPojedynczymiRozwiazaniami = new int[suroweRozwiazania.length][];
+
         for (int i = 0; i < suroweRozwiazania.length; i++) {
 
             if ((zawieraMinusowe(suroweRozwiazania[i]) == false) &&
                     (czyJestPojedynczeRozwiazanie(suroweRozwiazania[i]) == true)) {
-                System.out.println("Komorka nr " + (i+1) + Arrays.toString(suroweRozwiazania[i]));
+//                System.out.println("Komorka nr " + (i+1) + Arrays.toString(suroweRozwiazania[i]));
+                komorkiZPojedynczymiRozwiazaniami[i] = suroweRozwiazania[i];
             }
 
         }
-
+        return komorkiZPojedynczymiRozwiazaniami;
     }
 
     private boolean zawieraMinusowe(int[] tab) {
@@ -153,5 +157,25 @@ public class Sprawdzenia {
         return pojedynczeRozwiazanie;
     }
 
+// Pobranie rozwiazan i wpisanie ich do wejściowej tabeli sudoku (zastąpienie 0)
 
+    public int[][] sudokuZCzesciowymiRozwiazaniami ( int [][]sudoku ,int[][] pojedynczeRozwiazania) {
+        for (int i=0; i<pojedynczeRozwiazania.length; i++){
+
+                if (pojedynczeRozwiazania[i] != null) {
+//                    znalezc  gdzie jest cyfra != 0
+                    int indeksOdpowiedzi =0;
+                    for ( int j=0; j<9; j++){
+                            if (pojedynczeRozwiazania[i][j] >0){
+                                indeksOdpowiedzi = j;
+//                    zapisac ja na odpoweiednim miejscu w sudoku (zastapic dotychczasowe zero
+                                sudoku[(i)/9] [(i) %9] = pojedynczeRozwiazania[i] [indeksOdpowiedzi];
+                                break;
+                            }
+                    }
+                }
+
+        }
+        return sudoku;
+    }
 }

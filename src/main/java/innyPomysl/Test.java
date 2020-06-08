@@ -33,25 +33,39 @@ public class Test {
         System.out.println("Wypisanie mozliwych cyfr: kolumna + rzad");
         int[][] kolumnaIrzad = sprawdzenia.sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow(sudoku, rzedow, kolumn);
         int licznik =1;
-        for (int[] kwadracik: kolumnaIrzad) {
-            System.out.println("Numer komorki: "+licznik+Arrays.toString(kwadracik));
-            licznik++;
-        }
+//        for (int[] kwadracik: kolumnaIrzad) {
+//            System.out.println("Numer komorki: "+licznik+Arrays.toString(kwadracik));
+//            licznik++;
+//        }
 
         System.out.println("Wypisanie mozliwych z kwadratu");
         int[][] sprawdzenieMozliwychCyfrZKwadracikow = sprawdzenia.sprawdzenieMozliwychCyfrZKwadracikow(sudoku);
-        for (int[] kwadrat : sprawdzenieMozliwychCyfrZKwadracikow){
-            System.out.println(Arrays.toString(kwadrat));
-        }
+//        for (int[] kwadrat : sprawdzenieMozliwychCyfrZKwadracikow){
+//            System.out.println(Arrays.toString(kwadrat));
+//        }
 
 
         System.out.println("Wypisanie mozliwych cyfr: kol+rzad+ 1 kwadracik");
         int[][] pierwszyKwadrat_gotowe = sprawdzenia.sprawdzenieWrazZKwadratami(sudoku ,kolumnaIrzad, sprawdzenieMozliwychCyfrZKwadracikow);
-        for (int [] pierwszyKwadrat : pierwszyKwadrat_gotowe){
-            System.out.println("Komorka "+(licznik-81) + Arrays.toString(pierwszyKwadrat));
-            licznik++;
+//        for (int [] pierwszyKwadrat : pierwszyKwadrat_gotowe){
+//            System.out.println("Komorka "+(licznik-81) + Arrays.toString(pierwszyKwadrat));
+//            licznik++;
+//        }
+
+        int li =0;
+        System.out.println("Poniżej pojedyncze rowiązania");
+        int[][] pojedynczeRozwiazania = sprawdzenia.drukowanieRozwiazan(pierwszyKwadrat_gotowe);
+        for (int [] pojedynczeRozwiazanie : pojedynczeRozwiazania){
+            System.out.println("Komorka "+li + Arrays.toString(pojedynczeRozwiazanie));
+            li++;
         }
 
-        sprawdzenia.drukowanieRozwiazan(pierwszyKwadrat_gotowe);
+        System.out.println("Poniżej nowe sudoku z wypełnionymi rozwiązaniami");
+        int[][] noweSudoku = sprawdzenia.sudokuZCzesciowymiRozwiazaniami(sudoku, pojedynczeRozwiazania);
+        for (int [] nowyRzad : noweSudoku){
+            System.out.println( Arrays.toString(nowyRzad));
+        }
     }
+
+
 }
