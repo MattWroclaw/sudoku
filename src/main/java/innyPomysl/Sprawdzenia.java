@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Sprawdzenia {
 
-    public int[] sprawdzenieMozliweCfyry(int[] rzad) { // pakuje to tablicy tylko te cyfry które nie występują w rzędzie
+    private int[] sprawdzenieMozliweCfyry(int[] rzad) { // pakuje to tablicy tylko te cyfry które nie występują w rzędzie
         int[] pomocniczy = {1, 2, 3, 4, 5, 6, 7, 8, 9};
         for (int cyfraWystepujaca : rzad
         ) {
@@ -25,7 +25,7 @@ public class Sprawdzenia {
         return mozliweCywryWRzedach;
     }
 
-    public int[][] odwroceniePionNaRzad(int[][] sudoku) {
+    private int[][] odwroceniePionNaRzad(int[][] sudoku) {
         int[][] odwroconyMatrix = new int[9][9];
 
         for (int i = 0; i < 9; i++) {
@@ -36,7 +36,7 @@ public class Sprawdzenia {
         return odwroconyMatrix;
     }
 
-    public int[][] sprawdzenieKolumn(int[][] sudoku) {
+     int[][] sprawdzenieKolumn(int[][] sudoku) {
         int[][] odwrocnyMatrix = odwroceniePionNaRzad(sudoku);
         return sprawdzenieRzedow(odwrocnyMatrix);
     }
@@ -174,8 +174,51 @@ public class Sprawdzenia {
                             }
                     }
                 }
+        }
+        return sudoku;
+    }
+
+    public int[][] sudokuZKrokiemRozwiazania_GLOBAL (int [][] sudoku){
+        int[][] kolumn = sprawdzenieKolumn(sudoku);
+
+        int[][] rzedow = sprawdzenieRzedow(sudoku);
+
+        int[][] kolumnaIrzad = sprawdznieWPoszczegolnychKomorkachMoliwychCyfrBezKwadratow(sudoku, rzedow, kolumn);
+
+        int[][] sprawdzenieMozliwychCyfrZKwadracikow = sprawdzenieMozliwychCyfrZKwadracikow(sudoku);
+
+        int[][] pierwszyKwadrat_gotowe = sprawdzenieWrazZKwadratami(sudoku ,kolumnaIrzad, sprawdzenieMozliwychCyfrZKwadracikow);
+
+        int[][] pojedynczeRozwiazania = drukowanieRozwiazan(pierwszyKwadrat_gotowe);
+
+        int[][] noweSudoku = sudokuZCzesciowymiRozwiazaniami(sudoku, pojedynczeRozwiazania);
+
+        return noweSudoku;
+
+    }
+
+//    TODO metoda ktora w petli bedzie robilia sudokuZCzesciowymiRozwiazaniami az sie cale sudoku wypelni
+
+    public int[][] roziwazywanieWPetli (int[][] sudoku){
+
+        while (!czyJuzRozwiazana(sudoku)){
+
+            sudoku = sudokuZKrokiemRozwiazania_GLOBAL(sudoku);
 
         }
         return sudoku;
+    }
+
+    private boolean czyJuzRozwiazana (int [][] sudoku){
+        boolean juzRozwiazana = true;
+        for (int [] rzad : sudoku){
+            for (int i=0; i<rzad.length; i++){
+                if (rzad[i] ==0){
+                    juzRozwiazana = false;
+                    break;
+                }
+            }
+        }
+        return juzRozwiazana;
     }
 }
