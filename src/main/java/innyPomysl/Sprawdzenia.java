@@ -1,6 +1,9 @@
 package innyPomysl;
 
 import java.util.Arrays;
+import java.util.OptionalInt;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public class Sprawdzenia {
 
@@ -128,7 +131,10 @@ public class Sprawdzenia {
 //                System.out.println("Komorka nr " + (i+1) + Arrays.toString(suroweRozwiazania[i]));
                 komorkiZPojedynczymiRozwiazaniami[i] = suroweRozwiazania[i];
             }
-
+//              TODO w tej metodzie trzeba zmienić "poj rozwiązanie" na wielokrotne rozwiązanie
+//            czyli jak nie ma pojedycznego to patrzymy gdzie jest najmniej opcji, następnie bierzemy pierwszą możliwą cyfrę
+//            i sprawdzamy czy jest możliwe rozwiązanie reszty zadania z tą opcją. Jeśli nie, to bierzemy następną.
+//             Ale to trzeba zrobić na to osobną metodę...
         }
         return komorkiZPojedynczymiRozwiazaniami;
     }
@@ -197,14 +203,11 @@ public class Sprawdzenia {
 
     }
 
-//    TODO metoda ktora w petli bedzie robilia sudokuZCzesciowymiRozwiazaniami az sie cale sudoku wypelni
 
-    public int[][] roziwazywanieWPetli (int[][] sudoku){
+    public int[][] rozwiazywanieWPetli(int[][] sudoku){
 
         while (!czyJuzRozwiazana(sudoku)){
-
             sudoku = sudokuZKrokiemRozwiazania_GLOBAL(sudoku);
-
         }
         return sudoku;
     }
@@ -221,4 +224,42 @@ public class Sprawdzenia {
         }
         return juzRozwiazana;
     }
+
+    // metoda testowa, wypisuje index komórki w kolejności od tej gdzie jest najwęższe rozwiązanie
+    public  int ktoraKomorkaMaNajbardziejJednoznaczneRozwiazania (int [][] sprawdzenieWrazZKwadratami){
+
+        int[] ileRozwiazanNaDanymIndexie = new int[sprawdzenieWrazZKwadratami.length];
+// sprawdzenie ilościowo ile jest rozwiązań w poszczególnych komórkach
+        int indexyKomorek = 0;
+        for (int[] rozwiazaniaZDanejKomorki : sprawdzenieWrazZKwadratami){
+            int licznikPotencjalnychRozwiazan =0;
+            for (int potencjalneRozwiazanie : rozwiazaniaZDanejKomorki){
+                if (potencjalneRozwiazanie > 0){
+                    licznikPotencjalnychRozwiazan ++;
+                }
+            }
+            ileRozwiazanNaDanymIndexie[indexyKomorek] = licznikPotencjalnychRozwiazan;
+            indexyKomorek++;
+        }
+//        sprawdzenie, minimalnej liczny rozwiązań spośród wszystkich komórek
+        int najmniejWynikow = IntStream.of(ileRozwiazanNaDanymIndexie).filter(value -> value>0).min().getAsInt();
+
+//        odnalezienie komórki, która ma daną liczbę rozwiązań, oraz wskazanie jakie to są rozwiązania..
+        int indexKomorkiGdzieJestNajbardziejPrecyzyjnyWynik = -1;
+        for (int i=0; i<sprawdzenieWrazZKwadratami.length; i++){
+            int licznikCyfr =0;
+            for (int cyfra :
+                    sprawdzenieWrazZKwadratami[i]) {
+                if (cyfra>0){
+                    licznikCyfr++;
+                }
+            }
+            if (licznikCyfr == najmniejWynikow){
+                indexKomorkiGdzieJestNajbardziejPrecyzyjnyWynik = i;
+            }
+        }
+        return indexKomorkiGdzieJestNajbardziejPrecyzyjnyWynik;
+    }
+
+
 }

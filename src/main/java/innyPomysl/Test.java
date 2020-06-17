@@ -73,7 +73,7 @@ public class Test {
         }
 
         System.out.println("Sprawdzenie czy dziala calosciowe");
-        int[][] ints = sprawdzenia.roziwazywanieWPetli(sudoku);
+        int[][] ints = sprawdzenia.rozwiazywanieWPetli(sudoku);
         for (int [] rzadInt : ints){
             System.out.println(Arrays.toString(rzadInt));
         }
